@@ -9,8 +9,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.StaticLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -44,8 +48,11 @@ public class EasyTabsBuilder{
         return builder;
     }
 
-    public EasyTabsBuilder setCustomTypeface(final Typeface selected) {
+    /*
+      Changing the tabs TypeFace/Font
+        */
 
+    public EasyTabsBuilder setCustomTypeface(final Typeface selected) {
         ViewGroup vg = (ViewGroup) StaticTabsLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
@@ -1442,8 +1449,47 @@ public class EasyTabsBuilder{
     public EasyTabsBuilder addIcons(int... icons) {
         this.ResIdIcons = icons;
         return this;
-    }
+    }   public EasyTabsBuilder changeIconPosition(String position){
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        switch (position) {
+            case "left":
+                lp.gravity = Gravity.LEFT;
+                lp.setMargins(0,0, 0, 2);
+                break;
+            case "right":
+                lp.gravity = Gravity.RIGHT;
+                lp.setMargins(0, 2, 0, 0);
+                break;
+            case "top":
+                lp.gravity = Gravity.TOP;
+                lp.setMargins(2, 0, 0, 0);
+                break;
+            case "bottom":
+                lp.gravity = Gravity.BOTTOM;
+                lp.setMargins(0, 0, 2, 0);
+                break;
+            case "center":
+                lp.gravity = Gravity.CENTER;
+                lp.setMargins(0, 0, 0, 0);
+                break;
+            default:
+                break;
+        }
+        ViewGroup vg = (ViewGroup) StaticTabsLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
 
+                if (tabViewChild instanceof ImageView) {
+                    tabViewChild.setLayoutParams(lp);
+                }
+            }
+        }
+        return this;
+    }
     public EasyTabsBuilder setTransformation(boolean reverseDrawingOrder, ViewPager.PageTransformer transform) {
         StaticViewPager.setPageTransformer(reverseDrawingOrder, transform);
         return this;
@@ -1500,6 +1546,8 @@ public class EasyTabsBuilder{
         
         
     }
+
+
 
 
 }
