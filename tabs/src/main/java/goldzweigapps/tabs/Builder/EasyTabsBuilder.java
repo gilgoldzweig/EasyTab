@@ -1,20 +1,32 @@
 package goldzweigapps.tabs.Builder;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.StaticLayout;
+import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,30 +40,27 @@ import goldzweigapps.tabs.View.EasyTabs;
 
 @SuppressWarnings("UnusedDeclaration")
 public class EasyTabsBuilder{
-    
     private TabLayout StaticTabsLayout;
     private ViewPager StaticViewPager;
     private AppCompatActivity StaticActivity;
+    private EasyTabs easyTabs;
     private boolean isHidden = false;
     private boolean isFade = false;
     private int iconsPosition = 0;
     private Drawable[] Icons;
     private int[] ResIdIcons;
+    private int top = 0;
     private List<Fragment> FragmentList = new ArrayList<>();
     private List<String>  TitleList = new ArrayList<>();
 
-    public static EasyTabsBuilder init(EasyTabs easyTabs) {
+    public static EasyTabsBuilder with(EasyTabs easyTabs) {
         EasyTabsBuilder builder = new EasyTabsBuilder();
         builder.StaticTabsLayout = easyTabs.getTabLayout();
         builder.StaticViewPager = easyTabs.getViewPager();
         builder.StaticActivity = (AppCompatActivity) easyTabs.getContext();
+        builder.easyTabs = easyTabs;
         return builder;
     }
-
-    /*
-      Changing the tabs TypeFace/Font
-        */
-
     public EasyTabsBuilder setCustomTypeface(final Typeface selected) {
         ViewGroup vg = (ViewGroup) StaticTabsLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
@@ -80,11 +89,11 @@ public class EasyTabsBuilder{
         }
         return this;
     }
-    public EasyTabsBuilder setTextColors(@ColorInt int normalColor, @ColorInt int selectedColor) {
-        StaticTabsLayout.setTabTextColors(normalColor, selectedColor);
+    public EasyTabsBuilder setTextColors(@ColorInt int selectedColor, @ColorInt int unselectedColor) {
+        StaticTabsLayout.setTabTextColors(unselectedColor, selectedColor);
         return this;
     }
-    public EasyTabsBuilder setBackgroundColor(@ColorInt int Color) {
+    public EasyTabsBuilder setTabsBackgroundColor(@ColorInt int Color) {
         StaticTabsLayout.setBackgroundColor(Color);
         return this;
     }
@@ -1434,7 +1443,7 @@ public class EasyTabsBuilder{
         }
         return this;
     }
-    public EasyTabsBuilder HideTitle(boolean shown){this.isHidden = shown; return this;}
+    public EasyTabsBuilder hideAllTitles(boolean hide){this.isHidden = hide; return this;}
     public EasyTabsBuilder addTabs(TabItem... tabs) {
         for (TabItem item : tabs){
             FragmentList.add(item.getFragment());
@@ -1490,7 +1499,7 @@ public class EasyTabsBuilder{
         }
         return this;
     }
-    public EasyTabsBuilder setTransformation(boolean reverseDrawingOrder, ViewPager.PageTransformer transform) {
+    public EasyTabsBuilder addTransformation(boolean reverseDrawingOrder, ViewPager.PageTransformer transform) {
         StaticViewPager.setPageTransformer(reverseDrawingOrder, transform);
         return this;
     }
@@ -1546,6 +1555,9 @@ public class EasyTabsBuilder{
         
         
     }
+
+
+
 
 
 
