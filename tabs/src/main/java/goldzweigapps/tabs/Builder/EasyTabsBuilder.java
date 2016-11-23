@@ -36,6 +36,7 @@ import goldzweigapps.tabs.Adapters.ViewPagerAdapter;
 import goldzweigapps.tabs.Interface.TabsListener;
 import goldzweigapps.tabs.Items.AdapterItem;
 import goldzweigapps.tabs.Items.TabItem;
+import goldzweigapps.tabs.View.EasyBottomTabs;
 import goldzweigapps.tabs.View.EasyTabs;
 
 @SuppressWarnings("UnusedDeclaration")
@@ -44,6 +45,7 @@ public class EasyTabsBuilder{
     private ViewPager StaticViewPager;
     private AppCompatActivity StaticActivity;
     private EasyTabs easyTabs;
+    private EasyBottomTabs bottomTabs;
     private boolean isHidden = false;
     private boolean isFade = false;
     private int iconsPosition = 0;
@@ -59,6 +61,14 @@ public class EasyTabsBuilder{
         builder.StaticViewPager = easyTabs.getViewPager();
         builder.StaticActivity = (AppCompatActivity) easyTabs.getContext();
         builder.easyTabs = easyTabs;
+        return builder;
+    }
+    public static EasyTabsBuilder with(EasyBottomTabs easyTabs) {
+        EasyTabsBuilder builder = new EasyTabsBuilder();
+        builder.StaticTabsLayout = easyTabs.getTabLayout();
+        builder.StaticViewPager = easyTabs.getViewPager();
+        builder.StaticActivity = (AppCompatActivity) easyTabs.getContext();
+        builder.bottomTabs = easyTabs;
         return builder;
     }
     public EasyTabsBuilder setCustomTypeface(final Typeface selected) {
@@ -126,630 +136,15 @@ public class EasyTabsBuilder{
             if (Icons.length == FragmentList.size()) {
                 if (state) {
                     StaticViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                        @SuppressWarnings("ConstantConditions")
                         @Override
                         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                             int alphaCurrent = (int) (255 - (128 * Math.abs(positionOffset)));
                             int alphaNext = (int) (128 + (128 * Math.abs(positionOffset)));
 
-                            if (positionOffset != 0) {
+                            if (positionOffset != 0 && position != Icons.length) {
+                                StaticTabsLayout.getTabAt(position).getIcon().setAlpha(alphaCurrent);
+                                StaticTabsLayout.getTabAt(position + 1).getIcon().setAlpha(alphaNext);
 
-                                switch (Icons.length) {
-                                    case 0:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 1:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 2:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 3:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 4:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 5:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 6:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-
-                                        }
-                                        break;
-                                    case 7:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 8:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 9:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-
-                                    case 10:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 11:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-
-
-                                        }
-                                        break;
-                                    case 12:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-
-
-                                        }
-                                        break;
-                                    case 13:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 14:
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 14:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 14:
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 15:
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(16).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-
-                                }
                             }
                         }
 
@@ -762,8 +157,646 @@ public class EasyTabsBuilder{
                         public void onPageScrollStateChanged(int state) {
 
                         }
-
                     });
+//                    StaticViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                        @SuppressWarnings("ConstantConditions")
+//                        @Override
+//                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                            int alphaCurrent = (int) (255 - (128 * Math.abs(positionOffset)));
+//                            int alphaNext = (int) (128 + (128 * Math.abs(positionOffset)));
+//
+//                            if (positionOffset != 0) {
+//
+//                                switch (Icons.length) {
+//                                    case 0:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                        }
+//                                        break;
+//                                    case 1:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                        }
+//                                        break;
+//                                    case 2:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//                                    case 3:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                        }
+//                                        break;
+//                                    case 4:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                        }
+//                                        break;
+//                                    case 5:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//                                    case 6:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//
+//                                        }
+//                                        break;
+//                                    case 7:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//                                    case 8:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//                                    case 9:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//
+//                                    case 10:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 11:
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//                                    case 11:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 11:
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 12:
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//
+//                                        }
+//                                        break;
+//                                    case 12:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 11:
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 12:
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 13:
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//
+//                                        }
+//                                        break;
+//                                    case 13:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 11:
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 12:
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 13:
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 14:
+//                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                        }
+//                                        break;
+//                                    case 14:
+//                                        switch (position) {
+//                                            case 0:
+//                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 1:
+//                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 2:
+//                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 3:
+//                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 4:
+//                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 5:
+//                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 6:
+//                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 7:
+//                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 8:
+//                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 9:
+//                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 10:
+//                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 11:
+//                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 12:
+//                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 13:
+//                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 14:
+//                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
+//                                                break;
+//                                            case 15:
+//                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaCurrent);
+//                                                StaticTabsLayout.getTabAt(16).getIcon().setAlpha(alphaNext);
+//                                                break;
+//
+//                                        }
+//                                        break;
+//
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onPageSelected(int position) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onPageScrollStateChanged(int state) {
+//
+//                        }
+//
+//                    });
                 }
             } else {
                 Throwable throwable = new Throwable("Amount of icons must be equal to the number of StaticTabsLayout. ");
@@ -784,624 +817,11 @@ public class EasyTabsBuilder{
                         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                             int alphaCurrent = (int) (255 - (128 * Math.abs(positionOffset)));
                             int alphaNext = (int) (128 + (128 * Math.abs(positionOffset)));
+                            if (positionOffset != 0 && position != ResIdIcons.length) {
 
-                            if (positionOffset != 0) {
-                                switch (ResIdIcons.length) {
-                                    case 0:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 1:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 2:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
+                                StaticTabsLayout.getTabAt(position).getIcon().setAlpha(alphaCurrent);
+                                StaticTabsLayout.getTabAt(position + 1).getIcon().setAlpha(alphaNext);
 
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 3:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 4:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 5:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 6:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-
-                                        }
-                                        break;
-                                    case 7:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 8:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 9:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-
-                                    case 10:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-                                    case 11:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-
-
-                                        }
-                                        break;
-                                    case 12:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-
-
-                                        }
-                                        break;
-                                    case 13:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 14:
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
-                                                break;
-                                        }
-                                        break;
-                                    case 14:
-                                        switch (position) {
-                                            case 0:
-                                                StaticTabsLayout.getTabAt(0).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 1:
-                                                StaticTabsLayout.getTabAt(1).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 2:
-                                                StaticTabsLayout.getTabAt(2).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 3:
-                                                StaticTabsLayout.getTabAt(3).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 4:
-                                                StaticTabsLayout.getTabAt(4).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 5:
-                                                StaticTabsLayout.getTabAt(5).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 6:
-                                                StaticTabsLayout.getTabAt(6).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 7:
-                                                StaticTabsLayout.getTabAt(7).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 8:
-                                                StaticTabsLayout.getTabAt(8).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 9:
-                                                StaticTabsLayout.getTabAt(9).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 10:
-                                                StaticTabsLayout.getTabAt(10).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 11:
-                                                StaticTabsLayout.getTabAt(11).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 12:
-                                                StaticTabsLayout.getTabAt(12).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 13:
-                                                StaticTabsLayout.getTabAt(13).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 14:
-                                                StaticTabsLayout.getTabAt(14).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaNext);
-                                                break;
-                                            case 15:
-                                                StaticTabsLayout.getTabAt(15).getIcon().setAlpha(alphaCurrent);
-                                                StaticTabsLayout.getTabAt(16).getIcon().setAlpha(alphaNext);
-                                                break;
-
-                                        }
-                                        break;
-
-                                }
                             }
                         }
 
